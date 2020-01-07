@@ -23,7 +23,6 @@
 export default {
   asyncData(context, callback) {
     setTimeout(() => {
-      console.log(context);
       callback(null, {
         loadedPost: {
           id: "1",
@@ -36,7 +35,7 @@ export default {
             "https://static.pexels.com/photos/270348/pexels-photo-270348.jpeg"
         }
       });
-    }, 5000);
+    }, 1000);
   }
 };
 </script>
