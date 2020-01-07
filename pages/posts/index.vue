@@ -38,6 +38,9 @@ export default {
         ]
       });
     }, 1000);
+  },
+  created() {
+    this.$store.dispatch("setPosts", this.loadedPosts);
   }
 };
 </script>
