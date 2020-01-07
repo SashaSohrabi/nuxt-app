@@ -10,37 +10,10 @@ export default {
   components: {
     PostList
   },
-  asyncData(context, callback) {
-    setTimeout(() => {
-      callback(null, {
-        loadedPosts: [
-          {
-            id: "1",
-            title: "First Post",
-            previewText: "This is the first post",
-            thumbnail:
-              "https://static.pexels.com/photos/270348/pexels-photo-270348.jpeg"
-          },
-          {
-            id: "2",
-            title: "Second Post",
-            previewText: "This is the second post",
-            thumbnail:
-              "https://static.pexels.com/photos/270348/pexels-photo-270348.jpeg"
-          },
-          {
-            id: "3",
-            title: "Third Post",
-            previewText: "This is the third post",
-            thumbnail:
-              "https://static.pexels.com/photos/270348/pexels-photo-270348.jpeg"
-          }
-        ]
-      });
-    }, 1000);
-  },
-  created() {
-    this.$store.dispatch("setPosts", this.loadedPosts);
+  computed: {
+    loadedPosts() {
+      return this.$store.getters.loadedPosts;
+    }
   }
 };
 </script>
