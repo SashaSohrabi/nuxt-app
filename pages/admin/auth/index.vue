@@ -21,7 +21,6 @@ import AppControlInput from "@/components/UI/AppControlInput";
 import AppButton from "@/components/UI/AppButton";
 
 export default {
-  layout: "admin",
   name: "AdminAuthPage",
   layout: "admin",
   components: {
