@@ -3,7 +3,7 @@
     <section class="post">
       <h1 class="post-title">{{loadedPost.title}}</h1>
       <div class="post-details">
-        <div class="post-detail">Last updated on {{loadedPost.updadetDate}}</div>
+        <div class="post-detail">Last updated on {{loadedPost.updatedDate}}</div>
         <div class="post-detail">Written by {{loadedPost.author}}</div>
       </div>
       <p class="post-content">{{loadedPost.content}}</p>
@@ -20,22 +20,20 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  asyncData(context, callback) {
-    setTimeout(() => {
-      callback(null, {
-        loadedPost: {
-          id: "1",
-          title: `First Post (ID: ${context.params.id}`,
-          previewText: "This is the first post",
-          author: "Sasha",
-          updadetDate: new Date(),
-          content: "Some dummy text",
-          thumbnail:
-            "https://static.pexels.com/photos/270348/pexels-photo-270348.jpeg"
-        }
-      });
-    }, 1000);
+  asyncData(context) {
+    return axios
+      .get(
+        `https://nuxt-app-8eb25.firebaseio.com/posts/${context.params.id}.json`
+      )
+      .then(res => {
+        return {
+          loadedPost: res.data
+        };
+      })
+      .catch(e => context.error(e));
   }
 };
 </script>
