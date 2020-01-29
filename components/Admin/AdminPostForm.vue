@@ -29,13 +29,7 @@
 </template>
 
 <script>
-import AppButton from "@/components/UI/AppButton";
-import AppControlInput from "@/components/UI/AppControlInput";
 export default {
-  components: {
-    AppButton,
-    AppControlInput
-  },
   props: {
     post: {
       type: Object,
