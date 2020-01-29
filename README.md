@@ -20,3 +20,6 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+# Firebase Auth Rest API
+For detailed explanation and get endpoints => https://firebase.google.com/docs/reference/rest/auth
