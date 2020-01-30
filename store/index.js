@@ -45,7 +45,7 @@ const createStore = () => {
           updatedDate: new Date()
         };
         return axios
-          .post("https://nuxt-app-8eb25.firebaseio.com/posts.json", createdPost)
+          .post(`https://nuxt-app-8eb25.firebaseio.com/posts.json?auth=${vuexContex.state.token}`, createdPost)
           .then(res => {
             vuexContex.commit("addPost", { ...createdPost, id: res.data.name });
           })
@@ -54,7 +54,7 @@ const createStore = () => {
       editPost(vuexContex, editedPost) {
         return axios
           .put(
-            `https://nuxt-app-8eb25.firebaseio.com/posts/${editedPost.id}.json`,
+            `https://nuxt-app-8eb25.firebaseio.com/posts/${editedPost.id}.json?auth=${vuexContex.state.token}`,
             editedPost
           )
           .then(res => {
@@ -66,14 +66,10 @@ const createStore = () => {
         vuexContex.commit("setPosts", posts);
       },
       authenticateUser(vuexContex, authData) {
-        let authUrl =
-          "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" +
-          process.env.fbAPIkey;
+        let authUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.fbAPIkey}`;
 
         if (!authData.isLogin) {
-          authUrl =
-            "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" +
-            process.env.fbAPIkey;
+          authUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.fbAPIkey}`;
         }
         return axios
           .post(authUrl, {

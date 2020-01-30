@@ -21,7 +21,6 @@ export default {
         `https://nuxt-app-8eb25.firebaseio.com/posts/${context.params.postId}.json`
       )
       .then(res => {
-        console.log(res.data);
         return {
           loadedPost: { ...res.data, id: context.params.postId }
         };
