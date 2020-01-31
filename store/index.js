@@ -7,6 +7,7 @@ const createStore = () => {
       loadedPosts: [],
       token: null
     },
+
     mutations: {
       setPosts(state, posts) {
         state.loadedPosts = posts;
@@ -23,8 +24,12 @@ const createStore = () => {
       },
       setToken(state, token) {
         state.token = token;
+      },
+      clearToken(state) {
+        state.token = null;
       }
     },
+
     actions: {
       nuxtServerInit(vuexContex, context) {
         return axios
@@ -45,7 +50,10 @@ const createStore = () => {
           updatedDate: new Date()
         };
         return axios
-          .post(`https://nuxt-app-8eb25.firebaseio.com/posts.json?auth=${vuexContex.state.token}`, createdPost)
+          .post(
+            `https://nuxt-app-8eb25.firebaseio.com/posts.json?auth=${vuexContex.state.token}`,
+            createdPost
+          )
           .then(res => {
             vuexContex.commit("addPost", { ...createdPost, id: res.data.name });
           })
@@ -79,8 +87,14 @@ const createStore = () => {
           })
           .then(res => {
             vuexContex.commit("setToken", res.data.idToken);
+            vuexContex.commit("setLogoutTimer", result.expiresIn * 1000);
           })
           .catch(e => console.log(e));
+      },
+      setLogoutTimer(vuexContex, duration) {
+        setTimeout(() => {
+          vuexContex.commit("clearToken");
+        }, duration);
       }
     },
 
