@@ -87,7 +87,12 @@ const createStore = () => {
           })
           .then(res => {
             vuexContex.commit("setToken", res.data.idToken);
-            vuexContex.commit("setLogoutTimer", result.expiresIn * 1000);
+            localStorage.setItem("token", res.idToken);
+            localStorage.setItem(
+              "tokenExpiration",
+              new Date().getTime() + res.expiresIn * 1000
+            );
+            vuexContex.dispatch("setLogoutTimer", res.expiresIn * 1000);
           })
           .catch(e => console.log(e));
       },
@@ -95,6 +100,20 @@ const createStore = () => {
         setTimeout(() => {
           vuexContex.commit("clearToken");
         }, duration);
+      },
+      initAuth(vuexContex) {
+        const token = localStorage.getItem("token");
+        const expirationDate = localStorage.getItem("tokenExpiration");
+
+        if (new Date().getTime() > +expirationDate || !token) {
+          return;
+        }
+
+        vuexContex.dispatch(
+          "setLogoutTimer",
+          expirationDate - new Date().getTime()
+        );
+        vuexContex.commit("setToken", token);
       }
     },
 
